@@ -1,0 +1,176 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+framebuffer         0x4               console.o
+idt                 0x100             Interrupts.o
+ySB                 0x400             disk.o
+ybuff               0x1000            disk.o
+ftable              0x8c0             file.o
+row                 0x4               kernelc.o
+multiboot           0x4               console.o
+col                 0x4               kernelc.o
+
+Discarded input sections
+
+ .eh_frame      0x0000000000000000      0x120 kernelc.o
+ .eh_frame      0x0000000000000000      0x1e4 console.o
+ .eh_frame      0x0000000000000000       0xc8 kprintf.o
+ .eh_frame      0x0000000000000000      0x138 disk.o
+ .eh_frame      0x0000000000000000      0x1a8 Interrupts.o
+ .eh_frame      0x0000000000000000       0xd8 file.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000000400000                __image_base__ = 0x400000
+                0x0000000000000000                __dll__ = 0x0
+                0x0000000000400000                ___ImageBase = 0x400000
+                0x0000000000001000                __section_alignment__ = 0x1000
+                0x0000000000000200                __file_alignment__ = 0x200
+                0x0000000000000004                __major_os_version__ = 0x4
+                0x0000000000000000                __minor_os_version__ = 0x0
+                0x0000000000000001                __major_image_version__ = 0x1
+                0x0000000000000000                __minor_image_version__ = 0x0
+                0x0000000000000004                __major_subsystem_version__ = 0x4
+                0x0000000000000000                __minor_subsystem_version__ = 0x0
+                0x0000000000000003                __subsystem__ = 0x3
+                0x0000000000200000                __size_of_stack_reserve__ = 0x200000
+                0x0000000000001000                __size_of_stack_commit__ = 0x1000
+                0x0000000000100000                __size_of_heap_reserve__ = 0x100000
+                0x0000000000001000                __size_of_heap_commit__ = 0x1000
+                0x0000000000000000                __loader_flags__ = 0x0
+                0x0000000000000000                __dll_characteristics__ = 0x0
+                0x0000000000100000                . = 0x100000
+
+.text           0x0000000000100000    0x10e00
+                0x0000000000100000                _textStart = .
+ *(.text)
+ .text          0x0000000000100000       0x58 kernelasm.o
+ .text          0x0000000000100058      0x608 kernelc.o
+                0x000000000010019b                displayPPM
+                0x0000000000100411                sweet
+                0x0000000000100568                kmain
+                0x000000000010061d                clearBss
+                0x0000000000100637                factorial
+ .text          0x0000000000100660      0x774 console.o
+                0x0000000000100660                console_init
+                0x000000000010067c                set_pixel
+                0x0000000000100755                draw_rect
+                0x00000000001007d4                draw_char
+                0x00000000001008b3                draw_string
+                0x00000000001008e7                outb
+                0x0000000000100906                outw
+                0x0000000000100927                inb
+                0x0000000000100943                inw
+                0x0000000000100960                isBusy
+                0x000000000010097c                printstr
+                0x00000000001009b8                kmemset
+                0x00000000001009f0                kmemcpy
+                0x0000000000100a2b                console_putc
+ .text          0x0000000000100dd4      0xb34 kprintf.o
+                0x0000000000100e39                kprintf
+                0x0000000000100e67                ksprintf
+ .text          0x0000000000101908      0x61c disk.o
+                0x0000000000101908                disk_read_block
+                0x000000000010195b                print_blocks
+                0x0000000000101a2d                disk_init
+                0x0000000000101a67                disk_write_sector
+                0x0000000000101bde                disk_read_sector
+                0x0000000000101d46                disk_read_block_partial
+                0x0000000000101d93                disk_read_inode
+                0x0000000000101e27                print_file_name
+                0x0000000000101e6b                list_directory
+ .text          0x0000000000101f24      0x368 Interrupts.o
+                0x0000000000101f24                haltForever
+                0x0000000000101f2a                unknownInterrupt
+                0x0000000000101f62                unknownInterruptWithCode
+                0x0000000000101fad                divide_by_zero
+                0x0000000000101fe5                bad_op_code
+                0x000000000010201d                debug_trap
+                0x0000000000102055                page_fault
+                0x000000000010208d                protection_fault
+                0x00000000001020c5                table
+                0x000000000010211a                interrupt_init
+ .text          0x000000000010228c      0x49c file.o
+                0x000000000010228c                file_open
+                0x0000000000102348                file_close
+                0x0000000000102394                file_read
+                0x0000000000102564                file_write
+                0x000000000010256e                file_seek
+                0x0000000000102640                get_file_inode
+ *(.rodata)
+ *(.rdata)
+ .rdata         0x0000000000102728       0x94 kernelc.o
+ *fill*         0x00000000001027bc        0x4 
+ .rdata         0x00000000001027c0     0x2000 console.o
+ .rdata         0x00000000001047c0      0x1c4 kprintf.o
+ .rdata         0x0000000000104984       0x50 disk.o
+ .rdata         0x00000000001049d4       0xbc Interrupts.o
+ *(.rdata$zzz)
+ .rdata$zzz     0x0000000000104a90       0x14 kernelc.o
+ .rdata$zzz     0x0000000000104aa4       0x14 console.o
+ .rdata$zzz     0x0000000000104ab8       0x14 kprintf.o
+ .rdata$zzz     0x0000000000104acc       0x14 disk.o
+ .rdata$zzz     0x0000000000104ae0       0x14 Interrupts.o
+ .rdata$zzz     0x0000000000104af4       0x14 file.o
+                0x0000000000104b08                _textEnd = .
+                0x0000000000105000                . = ALIGN (ABSOLUTE (.), 0x1000)
+ *fill*         0x0000000000104b08      0x4f8 
+                0x0000000000105000                _dataStart = .
+ *(.data)
+ .data          0x0000000000105000        0x0 kernelc.o
+ .data          0x0000000000105000        0x0 console.o
+ .data          0x0000000000105000        0x0 kprintf.o
+ .data          0x0000000000105000        0x0 disk.o
+ .data          0x0000000000105000        0x0 Interrupts.o
+ .data          0x0000000000105000        0x0 file.o
+                0x0000000000105000                _dataEnd = .
+                0x0000000000105000                _bssStart = .
+ *(COMMON)
+ COMMON         0x0000000000105000        0x8 kernelc.o
+                0x0000000000105000                row
+                0x0000000000105004                col
+ COMMON         0x0000000000105008        0x8 console.o
+                0x0000000000105008                framebuffer
+                0x000000000010500c                multiboot
+ *fill*         0x0000000000105010       0x10 
+ COMMON         0x0000000000105020     0x1400 disk.o
+                0x0000000000105020                ySB
+                0x0000000000105420                ybuff
+ COMMON         0x0000000000106420      0x100 Interrupts.o
+                0x0000000000106420                idt
+ COMMON         0x0000000000106520      0x8c0 file.o
+                0x0000000000106520                ftable
+ *(.bss)
+ .bss           0x0000000000106de0     0x1000 kernelasm.o
+ .bss           0x0000000000107de0     0x1e00 kernelc.o
+ .bss           0x0000000000109be0        0x0 console.o
+ .bss           0x0000000000109be0        0x0 kprintf.o
+ .bss           0x0000000000109be0     0x4080 disk.o
+ .bss           0x000000000010dc60        0x0 Interrupts.o
+ .bss           0x000000000010dc60     0x3000 file.o
+                0x0000000000110c60                _bssEnd = .
+
+.drectve        0x0000000000111000      0x200
+ .drectve       0x0000000000111000       0x28 kernelc.o
+ .drectve       0x0000000000111028       0x60 console.o
+ .drectve       0x0000000000111088       0x54 disk.o
+ .drectve       0x00000000001110dc       0x14 Interrupts.o
+ .drectve       0x00000000001110f0       0x40 file.o
+
+/DISCARD/
+ *(.eh_frame)
+ *(.comment)
+LOAD kernelasm.o
+LOAD kernelc.o
+LOAD console.o
+LOAD kprintf.o
+LOAD disk.o
+LOAD Interrupts.o
+LOAD file.o
+OUTPUT(kernel.tmp pei-i386)
